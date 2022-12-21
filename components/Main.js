@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import { Inter } from "@next/font/google";
-import Headline from "../components/headline";
-import styles from "../../styles/Home.module.css";
+import { Headline } from "./Headline";
+import styles from "../styles/Home.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Main() {
+export function Main() {
   const router = useRouter();
   const replaceRouterPathName = router.pathname.replace("/", "");
   return (
