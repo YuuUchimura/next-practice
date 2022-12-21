@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Inter } from "@next/font/google";
-import Headline from "./headline";
+import Headline from "../components/headline";
 import styles from "../../styles/Home.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
