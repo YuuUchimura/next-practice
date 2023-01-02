@@ -1,24 +1,25 @@
 import Head from "next/head";
-import { useCallback, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "src/components/Header";
 import { Main } from "src/components/Main";
 
 export default function Home() {
-  // const handleClick = useCallback((e) => {
-  //   console.log(e.target.href);
-  //   e.preventDefault();
-  // }, []);
+  const [count, setCount] = useState(1);
+
+  const handleClick = () => {
+    setCount((count) => {
+      return count + 1;
+    });
+  };
 
   useEffect(() => {
-    console.log("マウント時");
     document.body.style.backgroundColor = "lightblue";
 
     return () => {
-      console.log("アンマウント時");
       document.body.style.backgroundColor = "";
     };
   }, []);
-  
+
   return (
     <>
       <Head>
@@ -28,12 +29,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      {/* <a
-        href="/about"
-        onClick={handleClick}
-      >
+      <h1>{count}</h1>
+      <button href="/about" onClick={handleClick}>
         ボタン
-      </a> */}
+      </button>
       <Main title="index" />
     </>
   );
