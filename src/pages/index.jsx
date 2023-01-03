@@ -2,15 +2,15 @@ import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 import { Header } from "src/components/Header";
 import { Main } from "src/components/Main";
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const [count, setCount] = useState(1);
   const [text, setText] = useState("");
   const [isShow, setIsShow] = useState(false);
   const handleClick = useCallback(() => {
-    console.log(count);
     if (count < 10) {
-      setCount((count) => count + 1);
+      setCount((prevCount) => prevCount + 1);
     }
   }, [count]);
 
@@ -18,8 +18,8 @@ export default function Home() {
     setText(e.target.value);
   }, []);
 
-  const handleDisplay = useCallback((e) => {
-    setIsShow((isShow) => !isShow);
+  const handleDisplay = useCallback(() => {
+    setIsShow((prevIsShow) => !prevIsShow);
   }, []);
 
   useEffect(() => {
