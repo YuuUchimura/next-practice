@@ -8,6 +8,8 @@ export default function Home() {
   const [count, setCount] = useState(1);
   const [text, setText] = useState("");
   const [isShow, setIsShow] = useState(false);
+  const [array, setArray] = useState([]);
+
   const handleClick = useCallback(() => {
     if (count < 10) {
       setCount((prevCount) => prevCount + 1);
@@ -21,6 +23,17 @@ export default function Home() {
   const handleDisplay = useCallback(() => {
     setIsShow((prevIsShow) => !prevIsShow);
   }, []);
+
+  const handleAdd = useCallback(() => {
+    setArray((prevArray) => {
+      if (prevArray.some((item) => item === text)) {
+        alert("同じ要素がすでに存在します。");
+        return prevArray;
+      }
+      const newArray = [...prevArray, text];
+      return newArray;
+    });
+  }, [text]);
 
   useEffect(() => {
     // console.log(`マウント時：${count}`);
@@ -40,15 +53,25 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      {isShow ? <h1>{count}</h1> : null}
-      <button href="/about" onClick={handleClick}>
-        ボタン
-      </button>
-      <div>
-        <button onClick={handleDisplay}>{isShow ? "非表示" : "表示"}</button>
-      </div>
-      <div>
-        <input type="text" value={text} onChange={handleChange} />
+      <div className={styles.body}>
+        {isShow ? <h1>{count}</h1> : null}
+        <button href="/about" onClick={handleClick}>
+          ボタン
+        </button>
+        <div>
+          <button onClick={handleDisplay}>{isShow ? "非表示" : "表示"}</button>
+        </div>
+        <div>
+          <input type="text" value={text} onChange={handleChange} />
+        </div>
+        <div>
+          <button onClick={handleAdd}>追加</button>
+        </div>
+        <ul>
+          {array.map((item, i) => {
+            return <li key={i}>{item}</li>;
+          })}
+        </ul>
       </div>
       <Main title="index" />
     </>
