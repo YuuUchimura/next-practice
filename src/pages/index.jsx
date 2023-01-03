@@ -1,16 +1,26 @@
 import Head from "next/head";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Header } from "src/components/Header";
 import { Main } from "src/components/Main";
 
 export default function Home() {
   const [count, setCount] = useState(1);
+  const [text, setText] = useState("");
+  const [isShow, setIsShow] = useState(false);
   const handleClick = useCallback(() => {
     console.log(count);
     if (count < 10) {
       setCount((count) => count + 1);
     }
   }, [count]);
+
+  const handleChange = useCallback((e) => {
+    setText(e.target.value);
+  }, []);
+
+  const handleDisplay = useCallback((e) => {
+    setIsShow((isShow) => !isShow);
+  }, []);
 
   useEffect(() => {
     // console.log(`マウント時：${count}`);
@@ -30,10 +40,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <h1>{count}</h1>
+      {isShow ? <h1>{count}</h1> : null}
       <button href="/about" onClick={handleClick}>
         ボタン
       </button>
+      <div>
+        <button onClick={handleDisplay}>{isShow ? "非表示" : "表示"}</button>
+      </div>
+      <div>
+        <input type="text" value={text} onChange={handleChange} />
+      </div>
       <Main title="index" />
     </>
   );
