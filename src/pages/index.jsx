@@ -1,48 +1,15 @@
 import Head from "next/head";
-import { useCallback, useEffect, useState } from "react";
-import { Header } from "src/components/Header";
-import { Main } from "src/components/Main";
 import styles from "../styles/Home.module.css";
+import { Main } from "src/components/Main";
+import { Header } from "src/components/Header";
+import { useCounter } from "src/hooks/useCounter";
+import { useInputArray } from "src/hooks/useInputArray";
+import { useBgLightblue } from "src/hooks/useBgLightblue";
 
 export default function Home() {
-  const [count, setCount] = useState(1);
-  const [text, setText] = useState("");
-  const [isShow, setIsShow] = useState(false);
-  const [array, setArray] = useState([]);
-
-  const handleClick = useCallback(() => {
-    if (count < 10) {
-      setCount((prevCount) => prevCount + 1);
-    }
-  }, [count]);
-
-  const handleChange = useCallback((e) => {
-    setText(e.target.value);
-  }, []);
-
-  const handleDisplay = useCallback(() => {
-    setIsShow((prevIsShow) => !prevIsShow);
-  }, []);
-
-  const handleAdd = useCallback(() => {
-    setArray((prevArray) => {
-      if (prevArray.some((item) => item === text)) {
-        alert("同じ要素がすでに存在します。");
-        return prevArray;
-      }
-      const newArray = [...prevArray, text];
-      return newArray;
-    });
-  }, [text]);
-
-  useEffect(() => {
-    // console.log(`マウント時：${count}`);
-    document.body.style.backgroundColor = "lightblue";
-    return () => {
-      // console.log(`アンマウント時：${count}`);
-      document.body.style.backgroundColor = "";
-    };
-  }, []);
+  const { count, isShow, handleClick, handleDisplay } = useCounter();
+  const { text, array, handleChange, handleAdd } = useInputArray();
+  useBgLightblue();
 
   return (
     <>
